@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Developer admin authentication helper
+    function isDeveloperAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == "admin@labdesk.com" ||
+        request.auth.token.admin == true
+      );
+    }
+
+    // License records: Read allowed for desktop activation checks; write restricted to Developer Admins
+    match /licenses/{licenseId} {
+      allow read: if true;
+      allow create, update, delete: if isDeveloperAdmin();
+    }
+
+    // Customer records: Read/Write restricted to Developer Admins
+    match /customers/{customerId} {
+      allow read, write: if isDeveloperAdmin();
+    }
+
+    // Installation tracking records
+    match /installations/{installationId} {
+      allow read: if true;
+      allow create, update: if true; // Desktop apps register installation metadata
+      allow delete: if isDeveloperAdmin();
+    }
+
+    // Developer License Audit Logs: Strictly Admin only
+    match /licenseAuditLogs/{logId} {
+      allow read, write: if isDeveloperAdmin();
+    }
+  }
+}

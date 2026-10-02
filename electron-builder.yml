@@ -1,0 +1,47 @@
+# electron-builder configuration — https://www.electron.build/configuration
+#
+# Produces a Windows NSIS installer. Installer artwork (icon, sidebar, header)
+# and the custom welcome-page credit live in ./installer, which is also the
+# build-resources directory.
+
+appId: com.brightpixel.labdesk
+productName: LabDesk
+copyright: "Copyright (C) 2026 Engr. Hamza Asad - Brightpixel.vercel.app"
+
+directories:
+  buildResources: installer
+  output: release
+
+# Ship only the built renderer, the Electron entry point and the manifest. The
+# renderer is fully bundled and the main process imports only Electron built-ins,
+# so no node_modules are needed at runtime.
+files:
+  - dist/**
+  - electron/**
+  - package.json
+  - "!node_modules/**"
+
+asar: true
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: installer/icon.png
+  artifactName: LabDesk-Setup-${version}.${ext}
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: LabDesk
+  deleteAppDataOnUninstall: false
+  # installerIcon / uninstallerIcon default to the app icon generated from
+  # installer/icon.png. installerSidebar and installerHeader default to
+  # installer/installerSidebar.bmp and installer/installerHeader.bmp, and
+  # include defaults to installer/installer.nsh (the vendor credit page).
+  artifactName: LabDesk-Setup-${version}.${ext}

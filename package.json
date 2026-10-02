@@ -1,0 +1,54 @@
+{
+  "name": "labdesk",
+  "private": true,
+  "version": "1.0.0",
+  "description": "LabDesk - Laboratory Management System: desktop laboratory management and reporting software.",
+  "author": {
+    "name": "Engr. Hamza Asad",
+    "url": "https://brightpixel.vercel.app"
+  },
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "playwright test",
+    "build:desktop": "vite build --base=./",
+    "dist:win": "pnpm run build:desktop && electron-builder --win nsis",
+    "format": "oxfmt"
+  },
+  "dependencies": {
+    "lucide-react": "^1.49.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3",
+    "jsdom": "^26.0.0",
+    "oxfmt": "^0.2.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.0",
+    "vite": "^8.0.5",
+    "vitest": "^5.0.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "esbuild"
+    ]
+  }
+}
